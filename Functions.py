@@ -96,3 +96,6 @@ def WebScraper(business, location, driver_path='./chromedriver-win64/chromedrive
         print("An error occurred:", e)
         driver.quit()
         return pd.DataFrame()  # Return empty DataFrame on error
+
+#Example Usage
+#df = WebScraper("film house cinema",'surulere')
