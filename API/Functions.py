@@ -1,7 +1,7 @@
 import re
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.keys import Keys # type: ignore
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
@@ -102,6 +102,7 @@ def WebScraper(business, location, driver_path='./chromedriver-win64/chromedrive
         return reviews_df, avg_rating
     
     except Exception as e:
-        print("An error occurred:", e)
         driver.quit()
-        return pd.DataFrame()  # Return empty DataFrame on error
+        return "No reviews Found"
+    
+
