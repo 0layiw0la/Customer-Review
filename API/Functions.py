@@ -136,14 +136,14 @@ async def scrape_reviews(request: ReviewRequest):
 
     if (reviews_df['sentiment'] == 'Positive').sum() > 0:
         limit = min(5, (reviews_df['sentiment'] == 'Positive').sum())
-        top_positive = reviews_df[reviews_df['sentiment'] == 'Positive'].nlargest(limit, 'polarity')[['Review', 'Date']]
+        top_positive = reviews_df[reviews_df['sentiment'] == 'Positive'].head(limit)[['Review', 'Date']]
         positive_dict = dict(zip(top_positive['Review'], top_positive['Date']))
     else:
         top_positive = "No positive comments from past 30 reviewers!"
 
     if (reviews_df['sentiment'] == 'Negative').sum() > 0:
         limit = min(5, (reviews_df['sentiment'] == 'Negative').sum())
-        top_negative = reviews_df[reviews_df['sentiment'] == 'Negative'].nsmallest(limit, 'polarity')[['Review', 'Date']]
+        top_negative = reviews_df[reviews_df['sentiment'] == 'Negative'].head(limit)[['Review', 'Date']]
         negative_dict = dict(zip(top_negative['Review'], top_negative['Date']))
     else:
         top_negative = "No Negative comments from past 30 reviewers!"
