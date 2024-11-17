@@ -1,29 +1,30 @@
-import re
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys # type: ignore
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
 import pandas as pd
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer as SIA
 
-def WebScraper(business, location, driver_path='./chromedriver-win64/chromedriver.exe'):
+def WebScraper(business, location, driver_path=r'.\chromedriver-win64\chromedriver.exe'):
     # Initialize WebDriver with headless option
     options = webdriver.ChromeOptions()
+    
     options.add_argument("--headless")  # Run in headless mode
     options.add_argument("--no-sandbox")  # Necessary for some environments
     options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
     options.add_argument("--disable-gpu")  # Disable GPU acceleration for headless mode
+    driver = webdriver.Chrome(r'API\chromedriver-win64\chromedriver.exe', options=options)
 
-    driver = webdriver.Chrome(driver_path, options=options)
     driver.get("https://www.google.com")
     
     # Search for the business name and location
     search_box = driver.find_element(By.NAME, "q")
     search_box.send_keys(f"{business} {location} reviews")
     search_box.send_keys(Keys.RETURN)
-    time.sleep(3)
+    time.sleep(1.5)
     
     # Wait for the review button to be clickable
     try:
@@ -49,7 +50,7 @@ def WebScraper(business, location, driver_path='./chromedriver-win64/chromedrive
         driver.execute_script("arguments[0].scrollIntoView(true);", newest_button)
         driver.execute_script("arguments[0].click();", newest_button)
 
-        review_limit = min(review_counts, 100)  # Limit to 100 reviews
+        review_limit = min(review_counts, 25)  # Limit to 100 reviews
         review_count = 0
 
         # Scroll and scrape reviews
@@ -57,7 +58,7 @@ def WebScraper(business, location, driver_path='./chromedriver-win64/chromedrive
         date_list = []
         
         for _ in range(25):  # Adjust scroll limit as needed
-            time.sleep(3)
+            time.sleep(1.5)
             review_containers = driver.find_elements(By.CLASS_NAME, "BgXiYe")
             scrollable_element = driver.find_element(By.CLASS_NAME, "review-dialog-list")
             driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scrollable_element)
@@ -102,7 +103,51 @@ def WebScraper(business, location, driver_path='./chromedriver-win64/chromedrive
         return reviews_df, avg_rating
     
     except Exception as e:
+        print("An error occurred:", e)
         driver.quit()
-        return "No reviews Found"
-    
+        return pd.DataFrame()  # Return empty DataFrame on error
 
+def GetPolarity(review):
+    analyser = SIA()
+    return analyser.polarity_scores(review)['compound']
+
+def GetSentiment(polarity):
+    if polarity > 0.1:
+        return "Positive"
+    elif polarity < -0.65:
+        return "Negative"
+    else:
+        return "Neutral"
+
+def App(business_name, location_name):
+    reviews_df, avg_rating = WebScraper(business_name, location_name) 
+    
+    # Apply sentiment analysis to each review
+    reviews_df['polarity'] = reviews_df["Review"].apply(GetPolarity)  
+    reviews_df['sentiment'] = reviews_df['polarity'].apply(GetSentiment)
+    positive_dict = {}
+    negative_dict = {}
+
+    if (reviews_df['sentiment'] == 'Positive').sum() > 0:
+        limit = min(5, (reviews_df['sentiment'] == 'Positive').sum())
+        top_positive = reviews_df[reviews_df['sentiment'] == 'Positive'].nlargest(limit, 'polarity')[['Review', 'Date']]
+        positive_dict = dict(zip(top_positive['Review'], top_positive['Date']))
+    else:
+        top_positive = "No positive comments from past 30 reviewers!"
+
+    if (reviews_df['sentiment'] == 'Negative').sum() > 0:
+        limit = min(5, (reviews_df['sentiment'] == 'Negative').sum())
+        top_negative = reviews_df[reviews_df['sentiment'] == 'Negative'].nsmallest(limit, 'polarity')[['Review', 'Date']]
+        negative_dict = dict(zip(top_negative['Review'], top_negative['Date']))
+    else:
+        top_negative = "No Negative comments from past 30 reviewers!"
+        
+    return positive_dict, negative_dict
+
+# Example Usage
+a = time.time()
+positive_reviews, negative_reviews = App("debonairs", "surulere")
+print("Positive Reviews: ", positive_reviews)
+print("Negative Reviews: ", negative_reviews)
+b = time.time()
+print(b - a)
