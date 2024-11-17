@@ -114,9 +114,9 @@ def GetPolarity(review):
     return analyser.polarity_scores(review)['compound']
 
 def GetSentiment(polarity):
-    if polarity > 0.1:
+    if polarity > 0.5:
         return "Positive"
-    elif polarity < -0.65:
+    elif polarity < -0.05:
         return "Negative"
     else:
         return "Neutral"
