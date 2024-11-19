@@ -139,7 +139,7 @@ def GetPolarity(review):
 def GetSentiment(polarity):
     if polarity > 0.5:
         return "Positive"
-    elif polarity < -0.05:
+    elif polarity < -0.2:
         return "Negative"
     else:
         return "Neutral"
