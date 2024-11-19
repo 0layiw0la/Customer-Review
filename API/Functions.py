@@ -38,7 +38,7 @@ def WebScraper(business, location, driver_path=r'.\chromedriver-win64\chromedriv
     search_box = driver.find_element(By.NAME, "q")
     search_box.send_keys(f"{business} {location} reviews")
     search_box.send_keys(Keys.RETURN)
-    time.sleep(2)
+    time.sleep(1.5)
     
     try:
         review_button = WebDriverWait(driver, 10).until(
@@ -59,55 +59,78 @@ def WebScraper(business, location, driver_path=r'.\chromedriver-win64\chromedriv
         )
         driver.execute_script("arguments[0].scrollIntoView(true);", newest_button)
         driver.execute_script("arguments[0].click();", newest_button)
-
-        review_limit = min(review_counts, 25)
+        time.sleep(1.5)
+        review_limit = min(review_counts, 25)  # Limit to 25 reviews
         review_count = 0
 
         reviews_list = []
         date_list = []
         
-        for _ in range(25):
-            time.sleep(1.8)
+        while review_count < review_limit:
+            # Wait for review containers to load
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_all_elements_located((By.CLASS_NAME, "BgXiYe"))
+            )
+            
+            # Re-fetch review containers after waiting for them to load
             review_containers = driver.find_elements(By.CLASS_NAME, "BgXiYe")
+            
+            # Scroll down to load new reviews
             scrollable_element = driver.find_element(By.CLASS_NAME, "review-dialog-list")
             driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scrollable_element)
-            
-            for container in review_containers:
-                container_soup = BeautifulSoup(container.get_attribute('outerHTML'), 'html.parser')
-                
-                date_span = container_soup.find('span', class_="dehysf lTi8oc")
-                date = date_span.get_text(strip=True) if date_span else None
-                
-                full_text_span = container_soup.find('span', class_='review-full-text')
-                if full_text_span and full_text_span.get_text(strip=True):
-                    text = full_text_span.get_text(strip=True)
-                else:
-                    alternative_text_span = container_soup.find('span', attrs={'data-expandable-section': True})
-                    text = alternative_text_span.get_text(strip=True) if alternative_text_span else None
 
-                if text and text.strip():
-                    if text not in reviews_list:
+            # Wait for new reviews to load
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_all_elements_located((By.CLASS_NAME, "BgXiYe"))
+            )
+
+            # Iterate through the review containers
+            for container in review_containers:
+                try:
+                    container_soup = BeautifulSoup(container.get_attribute('outerHTML'), 'html.parser')
+
+                    # Extract review date
+                    date_span = container_soup.find('span', class_="dehysf lTi8oc")
+                    date = date_span.get_text(strip=True) if date_span else None
+
+                    # Extract review text
+                    full_text_span = container_soup.find('span', class_='review-full-text')
+                    if full_text_span and full_text_span.get_text(strip=True):
+                        text = full_text_span.get_text(strip=True)
+                    else:
+                        alternative_text_span = container_soup.find('span', attrs={'data-expandable-section': True})
+                        text = alternative_text_span.get_text(strip=True) if alternative_text_span else None
+
+                    # Add the review if it's new and not already collected
+                    if text and text.strip() and text not in reviews_list:
                         reviews_list.append(text)
                         date_list.append(date)
                         review_count += 1
-                        if review_count >= review_limit:
-                            break
+
+                    # Stop once the review count limit is reached
+                    if review_count >= review_limit:
+                        break
+                except Exception as e:
+                    print(f"Error while processing review: {e}")
+
+            # Check if the review count exceeds the limit
             if review_count >= review_limit:
                 break
 
         driver.quit()
 
+
         reviews_df = pd.DataFrame({
             "Review": reviews_list,
             "Date": date_list
         })
-
+        print('success',avg_rating)
         return reviews_df, avg_rating
     
     except Exception as e:
         print("An error occurred:", e)
         driver.quit()
-        return pd.DataFrame(), None
+        return None, None
 
 def GetPolarity(review):
     analyser = SIA()
@@ -121,12 +144,13 @@ def GetSentiment(polarity):
     else:
         return "Neutral"
 
-@app.post("/scrape-reviews/")
-async def scrape_reviews(request: ReviewRequest):
+@app.post("/")
+async def scrape_reviews(request: ReviewRequest): 
     reviews_df, avg_rating = WebScraper(request.business_name, request.location_name) 
-
-    if reviews_df.empty:
-        return {"error": "Failed to scrape reviews"}
+    if reviews_df is None or reviews_df.empty:
+        return {"error" :"Location not found"}
+    else:
+        pass
 
     reviews_df['polarity'] = reviews_df["Review"].apply(GetPolarity)  
     reviews_df['sentiment'] = reviews_df['polarity'].apply(GetSentiment)
