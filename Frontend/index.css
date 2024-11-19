@@ -26,17 +26,15 @@ h3{
 	text-align:center;
 }
 #review-results{
-	border:1px solid red;
+	display:none;
 }
 .reviews_grid{
 	width:90lvw;
 	margin:0 auto;
-	border:1px solid red;
 	display:flex;
 	gap: 30px;
 }
 .reviews_grid > *{
-
 	width:50%;
 }
 .review{
@@ -44,11 +42,31 @@ h3{
 	flex-direction: column;
 	gap:5px;
 	background-color: #ebebeb;
+	padding:12px;
 }
 .date{
 	align-self: flex-end;
 	padding-right: 5px;
 	font-size:0.8em;
+}
+.text {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap; /* Truncate text to one line */
+}
+
+.expanded {
+    white-space: normal; /* Allow text to wrap */
+    overflow: visible; /* Show all text */
+    height:fit-content;
+}
+
+.toggle-button {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 5px;
+    font-size:0.8em;
 }
 button{
 	grid-column: span 2 ;
