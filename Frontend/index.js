@@ -5,8 +5,16 @@ document.getElementById('review-form').addEventListener('submit', function(event
     const business_name = document.getElementById('business_name').value;
     const location_name = document.getElementById('location').value;
 
+    // Get references to the review results div and the loading indicator
+    const reviewResultsDiv = document.getElementById('review-results');
+    
+
+    // Hide the review results and show the loading indicator
+    reviewResultsDiv.style.display = 'none'; // Hide results div while fetching
+    
+
     // Make the API request to fetch reviews
-    fetch('http://127.0.0.1:8000/scrape-reviews/', {
+    fetch('http://127.0.0.1:8000/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -17,10 +25,20 @@ document.getElementById('review-form').addEventListener('submit', function(event
         })
     })
     .then(response => response.json())
-    .then(data => displayResults(data))
+    .then(data => {
+        if (data.error) {
+            alert(data.error);  // Show alert if there's an error
+        } else {
+            displayResults(data);
+        }
+
+        // Show the review results div
+        reviewResultsDiv.style.display = 'block';
+    })
     .catch(error => {
         console.error('Error:', error);
         alert("There was an error fetching the reviews.");
+        loadingIndicator.style.display = 'none'; // Hide loading on error
     });
 });
 
@@ -40,7 +58,7 @@ function displayResults(data) {
         Object.entries(positiveReviews).forEach(([review, date]) => {
             const reviewSpan = document.createElement('span');
             reviewSpan.classList.add('review');
-            reviewSpan.innerHTML = `${review} (Date: ${date})`;
+            reviewSpan.innerHTML = `<div class="date"><i><b>${date}</i></b></div><div>${review}</div> `;
             positiveReviewSpan.appendChild(reviewSpan);
             positiveReviewSpan.appendChild(document.createElement('br'));  // Add a line break between reviews
         });

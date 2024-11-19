@@ -27,23 +27,28 @@
 <body>
     <div>
         <h1>CUSTOMER REVIEWS</h1>
-        <form id="review-form">
+        <form id="review-form" >
             <input id="business_name" type="text" placeholder="Business Name" required />
             <input id="location" type="text" placeholder="Location" required />
             <button id="review_btn" type="submit">Get Reviews</button>
         </form>
 
         <div id="review-results">
-            <h2>Review Results</h2>
+        	<div class="summary">
+            	Average Rating: 
+            	<span id="avg-rating">Loading...</span><br><br>
+        	</div>
+        	<div class = "reviews_grid">
+        		<div class="reviews_wrapper">
+            		<h3>Positive Reviews:</h3>
+            		<div id="positive-reviews">Loading...</div><br><br>
+        		</div>
 
-            <h3>Average Rating:</h3>
-            <span id="avg-rating">Loading...</span><br><br>
-
-            <h3>Positive Reviews:</h3>
-            <div id="positive-reviews">Loading...</div><br><br>
-
-            <h3>Negative Reviews:</h3>
-            <div id="negative-reviews">Loading...</div><br><br>
+        		<div class="reviews_wrapper">
+            		<h3>Negative Reviews:</h3>
+            		<div id="negative-reviews">Loading...</div><br><br>
+        		</div>
+        	</div>
         </div>
     </div>
 
