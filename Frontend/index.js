@@ -38,7 +38,6 @@ document.getElementById('review-form').addEventListener('submit', function(event
     .catch(error => {
         console.error('Error:', error);
         alert("There was an error fetching the reviews.");
-        loadingIndicator.style.display = 'none'; // Hide loading on error
     });
 });
 
@@ -73,7 +72,7 @@ function displayResults(data) {
         Object.entries(negativeReviews).forEach(([review, date]) => {
             const reviewSpan = document.createElement('span');
             reviewSpan.classList.add('review');
-            reviewSpan.innerHTML = `${review} (Date: ${date})`;
+            reviewSpan.innerHTML = `<div class="date"><i><b>${date}</i></b></div><div>${review}</div>`;
             negativeReviewSpan.appendChild(reviewSpan);
             negativeReviewSpan.appendChild(document.createElement('br'));  // Add a line break between reviews
         });

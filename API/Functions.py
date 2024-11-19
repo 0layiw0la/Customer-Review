@@ -59,7 +59,7 @@ def WebScraper(business, location, driver_path=r'.\chromedriver-win64\chromedriv
         )
         driver.execute_script("arguments[0].scrollIntoView(true);", newest_button)
         driver.execute_script("arguments[0].click();", newest_button)
-        time.sleep(1.5)
+        time.sleep(2)
         review_limit = min(review_counts, 25)  # Limit to 25 reviews
         review_count = 0
 
