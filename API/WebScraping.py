@@ -7,8 +7,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
 import pandas as pd
+import chromedriver_autoinstaller  
 
-def WebScraper(business, location, driver_path=r'.\chromedriver-win64\chromedriver.exe'):
+def WebScraper(business, location):
+    # Automatically install and get the path to chromedriver
+    driver_path = chromedriver_autoinstaller.install()
+
     # Set up the Chrome WebDriver with options for headless browsing (no GUI)
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")  # Run in headless mode (without opening a browser window)
