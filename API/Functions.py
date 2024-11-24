@@ -143,6 +143,8 @@ def GetPolarity(review):
         "5/5":10,
         "terrible":-10,
         "disgusting":-10,
+        "hot":-10,
+        "wet":-10
     })
     return analyser.polarity_scores(review)
 
