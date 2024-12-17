@@ -1,57 +1,12 @@
-<!-- <!DOCTYPE html>
-<head>
-	<title>should you go</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
-</head>
-<body>
-	<div>
-		<h1>CUSTOMER REVIEWS</h1>
-        <form>
-        	<input id="business_name" type ="text" placeholder="Business Name" />
-            <input id="location" type ="text" placeholder="Location" />
-            <button id="review_btn" type='submit'>Review</button>
-        </form>
-	</div>
-	<script src="index.js"> </script>
-</body>
-</html>
--->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Customer Reviews</title>
-    <link rel="stylesheet" type="text/css" href="index.css">
-</head>
-<body>
-    <div>
-        <h1>CUSTOMER REVIEWS</h1>
-        <form id="review-form" >
-            <input id="business_name" type="text" placeholder="Business Name" required />
-            <input id="location" type="text" placeholder="Location" required />
-            <button id="review_btn" type="submit">Get Reviews</button>
-        </form>
-
-        <div id="review-results">
-        	<div id="summary">
-            	Average Rating: 
-            	<span id="avg-rating"></span><br><br>
-        	</div>
-        	<div class = "reviews_grid">
-        		<div class="reviews_wrapper">
-            		<h3>Positive Reviews:</h3>
-            		<div id="positive-reviews"></div><br><br>
-        		</div>
-
-        		<div class="reviews_wrapper">
-            		<h3>Negative Reviews:</h3>
-            		<div id="negative-reviews"></div><br><br>
-        		</div>
-        	</div>
-        </div>
-    </div>
-
-    <script src="index.js"></script>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
