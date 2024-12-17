@@ -1,6 +1,6 @@
 FROM python:3.9-slim
 
-# Installing system dependencies required for Chrome and Selenium
+# Install system dependencies required for Chrome and Selenium
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
@@ -14,30 +14,35 @@ RUN apt-get update && apt-get install -y \
     libu2f-udev \
     xdg-utils \
     libgbm-dev \
+    && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# Installing Google Chrome
+# Install Google Chrome
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
     apt-get update && \
-    apt-get install -y google-chrome-stable
+    apt-get install -y google-chrome-stable && \
+    rm -rf /var/lib/apt/lists/*
 
-# Installing ChromeDriver
+# Install ChromeDriver
 RUN wget -q -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$(wget -q -O - https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip && \
     unzip /tmp/chromedriver.zip -d /usr/local/bin/ && \
     rm /tmp/chromedriver.zip
 
-# Seting environment variables for ChromeDriver
+# Set environment variables for ChromeDriver
 ENV PATH="/usr/local/bin:$PATH"
 
-# Seting the working directory inside the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copying all project files into the container
+# Copy all project files into the container
 COPY . .
 
-# Installing Python dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Seting the default script to execute when the container starts
-CMD ["python", "Main.py"]
+# Expose port 8000 to access the FastAPI app
+EXPOSE 8000
+
+# Set the default command to run FastAPI with uvicorn
+CMD ["uvicorn", "Main:app", "--host", "0.0.0.0", "--port", "8000"]

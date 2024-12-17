@@ -22,7 +22,7 @@ def WebScraper(business, location):
     
     # Initialize the WebDriver with the specified options
     driver = webdriver.Chrome(driver_path, options=options)
-
+    wait = WebDriverWait(driver, 10)
     # Navigate to Google's homepage
     driver.get("https://www.google.com")
     

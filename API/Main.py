@@ -19,6 +19,10 @@ class ReviewRequest(BaseModel):
     business_name: str
     location_name: str
 
+@app.get("/get")
+async def test():
+    return {"message":"cors works"}
+
 @app.post("/")
 async def scrape_reviews(request: ReviewRequest): 
     reviews_df, avg_rating = WebScraper(request.business_name, request.location_name)
