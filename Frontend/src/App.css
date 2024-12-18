@@ -127,8 +127,11 @@ h1{
 		padding:10px;
 	}	
 	form{
-		max-width: 85vw;
-	}  
+		justify-items: end;
+	}
+	input{
+		width:35lvw;
+	}
 	  h3 {
 		text-align: left;
 	  }
