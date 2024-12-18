@@ -63,8 +63,11 @@ def WebScraper(business, location):
         reviews_list = []
         date_list = []
         
+        max_scroll_attempts = 15  #maximum number of scroll attempts
+        scroll_attempts = 0
+
         # Loop through and scrape reviews until the limit is reached
-        while review_count < review_limit:
+        while review_count < review_limit and scroll_attempts < max_scroll_attempts:
             # Wait for the reviews to load
             WebDriverWait(driver, 10).until(
                 EC.presence_of_all_elements_located((By.CLASS_NAME, "BgXiYe"))
@@ -113,6 +116,8 @@ def WebScraper(business, location):
             # Stop if the review limit is reached
             if review_count >= review_limit:
                 break
+
+            scroll_attempts+=1
 
         driver.quit()  # Close the WebDriver once done scraping
 
