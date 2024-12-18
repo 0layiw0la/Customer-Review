@@ -125,7 +125,10 @@ h1{
 	h1{
 		font-size:2.3rem;
 		padding:10px;
-	}	  
+	}	
+	form{
+		max-width: 85vw;
+	}  
 	  h3 {
 		text-align: left;
 	  }
