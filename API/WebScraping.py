@@ -63,7 +63,7 @@ def WebScraper(business, location):
         reviews_list = []
         date_list = []
         
-        max_scroll_attempts = 15  #maximum number of scroll attempts
+        max_scroll_attempts = 10  #maximum number of scroll attempts
         scroll_attempts = 0
 
         # Loop through and scrape reviews until the limit is reached

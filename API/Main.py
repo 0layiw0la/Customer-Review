@@ -9,9 +9,9 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["https://getcustomerreviews.netlify.app"],  
     allow_credentials=True,
-    allow_methods=["*"],  
+    allow_methods=["GET", "POST"],  
     allow_headers=["*"],  
 )
 
@@ -19,11 +19,11 @@ class ReviewRequest(BaseModel):
     business_name: str
     location_name: str
 
-@app.get("/get")
+@app.get("/")
 async def test():
     return {"message":"cors works"}
 
-@app.post("/")
+@app.post("/get_reviews")
 async def scrape_reviews(request: ReviewRequest): 
     reviews_df, avg_rating = WebScraper(request.business_name, request.location_name)
     if reviews_df is None or reviews_df.empty:
