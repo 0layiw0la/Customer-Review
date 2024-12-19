@@ -10,7 +10,7 @@ function ReviewForm({ onDataReceived }) {
     setLoading(true); // Start loading
 
     // Make API request to fetch reviews
-    fetch('https://customer-review-59a9.onrender.com/', {
+    fetch('https://customereeviewapp-bjdzasdpemesc4g0.canadacentral-01.azurewebsites.net/get_reviews', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
