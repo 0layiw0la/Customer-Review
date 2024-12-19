@@ -2,8 +2,8 @@
 
 This project is a web app that uses sentiment analysis to enable users get the most recent positive and negative reviews for any business by putting in the name and location. 
 
-Live link : [here](https://getcustomerreviews.netlify.app/)
-Docker hub repository : [here](https://hub.docker.com/r/0lay1w0la/customerreviewsapi)
+- Live link : [here](https://getcustomerreviews.netlify.app/)
+- Docker hub repository : [here](https://hub.docker.com/r/0lay1w0la/customerreviewsapi)
 
 ## Table of Contents
 - [Features](#features)
@@ -26,7 +26,6 @@ Docker hub repository : [here](https://hub.docker.com/r/0lay1w0la/customerreview
 - [Improvements and Roadmap](#improvements-and-roadmap)
 - [Contributing](#contributing)
 - [License](#license)
-- [Acknowledgements](#acknowledgements)
 
 ## Features
 - **Recent Reviews**: Focuses on the latest reviews for timely insights.
@@ -163,4 +162,4 @@ Contributions are welcome! Please fork the repository, make changes, and submit 
 ## License
 This project is licensed under the MIT License.
 
----
+

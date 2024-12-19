@@ -9,6 +9,9 @@ body{
 	min-height: 100%;
 	margin:0
 }
+
+/* Header section */
+
 h1{
 	text-align: center;
 	margin: 0 0 48.4px 0;
@@ -17,7 +20,8 @@ h1{
 	background-color: #c0c0c0;
 	color:#fff;
 }
-  
+
+/* Input form */
   form {
 	margin: 0 auto;
 	display: grid;
@@ -25,7 +29,33 @@ h1{
 	width: fit-content;
 	gap: 20px;
   }
+  button {
+	grid-column: span 2;
+	width: fit-content;
+	padding: 5px 15px;
+	border-radius: 8px;
+	border: 1px solid #c0c0c0;
+	background-color: #c0c0c0;
+	color: #fff;
+	height: 36.3px;
+	justify-self: right;
+	font-size: 1.1rem;
+	cursor: pointer;
+  }
   
+  button:hover {
+	background-color: #fff;
+	color: #c0c0c0;
+  }
+  
+  input {
+	width:28lvw;
+	height: 36.3px;
+	font-size: 1rem;
+	padding-left: 10px;
+  }
+  
+/* Review results section*/
   h3 {
 	text-align: center;
   }
@@ -71,6 +101,7 @@ h1{
 	font-size: 0.8rem;
   }
   
+ /* full and short reviews styling*/ 
   .text {
 	display: block;
 	overflow: hidden;
@@ -92,32 +123,7 @@ h1{
 	font-size: 0.8rem;
   }
   
-  button {
-	grid-column: span 2;
-	width: fit-content;
-	padding: 5px 15px;
-	border-radius: 8px;
-	border: 1px solid #c0c0c0;
-	background-color: #c0c0c0;
-	color: #fff;
-	height: 36.3px;
-	justify-self: right;
-	font-size: 1.1rem;
-	cursor: pointer;
-  }
-  
-  button:hover {
-	background-color: #fff;
-	color: #c0c0c0;
-  }
-  
-  input {
-	width:28lvw;
-	height: 36.3px;
-	font-size: 1rem;
-	padding-left: 10px;
-  }
-
+/* Loading screen section */
   .loading-overlay {
 	position: fixed;
 	top: 0;
@@ -167,6 +173,7 @@ h1{
 	}
 	input{
 		width:35lvw;
+		height: 24.2px;
 	}
 	  h3 {
 		text-align: left;
@@ -189,8 +196,5 @@ h1{
 	  
 	  .reviews_grid > * {
 		width: 100%;
-	  }
-	  input{
-		height: 24.2px;
 	  }
 }
