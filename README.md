@@ -2,7 +2,7 @@
 
 This project is a web app that uses sentiment analysis to enable users get the most recent positive and negative reviews for any business by putting in the name and location. 
 
-- Live link : [here](https://getcustomerreviews.netlify.app/)
+- Web App link : [here](https://getcustomerreviews.netlify.app/)
 - Docker hub repository : [here](https://hub.docker.com/r/0lay1w0la/customerreviewsapi)
 
 ## Table of Contents
@@ -66,12 +66,25 @@ Ensure the following tools are installed:
    git clone https://github.com/0layiw0la/Customer-Review.git
    cd customer-review/API
    ```
+      
 2. Build and run the Docker container:
    ```bash
    docker build -t customer-review-api .
    docker run -p 8000:8000 customer-review-api
    ```
-
+   
+    OR
+   
+1. Pull Docker image
+    ```bash
+    docker pull 0lay1w0la/customerreviewsapi
+    ```
+    
+2. Run Docker container
+   ```bash
+   docker run -p 8000:8000 customer-review-api
+   ```
+   
 #### Frontend
 1. Navigate to the `Frontend` directory:
    ```bash
@@ -89,7 +102,7 @@ Ensure the following tools are installed:
 ---
 
 ## API Endpoints
-
+Api Link [here](https://customereeviewapp-bjdzasdpemesc4g0.canadacentral-01.azurewebsites.net)
 ### **GET /**
 - **Description**: Test CORS setup.
 - **Response**:
