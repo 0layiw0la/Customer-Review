@@ -5,6 +5,10 @@ This project is a web app that uses sentiment analysis to enable users get the m
 - Web App link : [here](https://getcustomerreviews.netlify.app/)
 - Docker hub repository : [here](https://hub.docker.com/r/0lay1w0la/customerreviewsapi)
 
+**Features to be added:**
+- direct link to instagram pages. 
+- direct link to websites. 
+- choose number of reviews. 
 ## Table of Contents
 - [Features](#features)
 - [Architecture](#architecture)
