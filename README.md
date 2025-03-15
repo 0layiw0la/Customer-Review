@@ -1,4 +1,5 @@
 # 🚨 CURRENTLY FIXING CAPTCHA ISSUES!!! 🚨
+While i sort out the captcha issues it can still be run on local by cloning the repo, it's been setup to run with the gui for manual captcha solving (if it shows up).
 
 ## Customer-Review Sentiment Analysis Web App
 
@@ -79,7 +80,7 @@ Ensure the following tools are installed:
    docker run -p 8000:8000 customer-review-api
    ```
    
-    OR
+    OR (for now this is not going to work due to the captcha issues)
    
 1. Pull Docker image
     ```bash
