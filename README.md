@@ -1,4 +1,6 @@
-# Customer-Review Sentiment Analysis Web App
+# 🚨 CURRENTLY FIXING CAPTCHA ISSUES!!! 🚨
+
+## Customer-Review Sentiment Analysis Web App
 
 This project is a web app that uses sentiment analysis to enable users get the most recent positive and negative reviews for any business by putting in the name and location. 
 
