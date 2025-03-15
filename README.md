@@ -1,5 +1,31 @@
 # 🚨 CURRENTLY FIXING CAPTCHA ISSUES!!! 🚨
-While i sort out the captcha issues it can still be run on local by cloning the repo, it's been setup to run with the gui for manual captcha solving (if it shows up), you also have to change the API link in frontend [reviewform.jsx](https://github.com/0layiw0la/Customer-Review/blob/main/Frontend/src/components/ReviewForm.jsx)to localhost.
+While i sort out the captcha issues it can still be run on local by cloning the repo, it's been setup to run with the gui for manual captcha solving (if it shows up), you also have to change the API link in frontend [reviewform.jsx](https://github.com/0layiw0la/Customer-Review/blob/main/Frontend/src/components/ReviewForm.jsx) to localhost.
+
+## To do this:
+#### Backend
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/0layiw0la/Customer-Review.git
+   cd customer-review/API
+   ```
+2. Run the API and copy the link:
+ ```bash
+   uvicorn main:app --reload
+```
+
+#### Frontend (Before this go to the ReviewForm.jsx component in src/components and change the link to your local API)
+1. Navigate to the `Frontend` directory:
+   ```bash
+   cd ../Frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
 ## Customer-Review Sentiment Analysis Web App
 
