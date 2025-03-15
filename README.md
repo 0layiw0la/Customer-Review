@@ -1,5 +1,5 @@
 # 🚨 CURRENTLY FIXING CAPTCHA ISSUES!!! 🚨
-While i sort out the captcha issues it can still be run on local by cloning the repo, it's been setup to run with the gui for manual captcha solving (if it shows up), you also have to change the API link to localhost.
+While i sort out the captcha issues it can still be run on local by cloning the repo, it's been setup to run with the gui for manual captcha solving (if it shows up), you also have to change the API link in frontend [reviewform.jsx](https://github.com/0layiw0la/Customer-Review/blob/main/Frontend/src/components/ReviewForm.jsx)to localhost.
 
 ## Customer-Review Sentiment Analysis Web App
 
