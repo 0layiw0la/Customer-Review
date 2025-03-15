@@ -15,7 +15,7 @@ def WebScraper(business, location):
 
     # Setting up headless browsing
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless")  
+    # options.add_argument("--headless")  remove this comment to run in headless mode.
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
@@ -30,7 +30,7 @@ def WebScraper(business, location):
     search_box.send_keys(f"{business} {location} reviews")
     search_box.send_keys(Keys.RETURN)  
 
-    time.sleep(1.5)  # Waiting for the results to load incase of poor network
+    time.sleep(20)  # Waiting for the results to load incase of poor network Whilst i sort out the captcha issues can be done manually to allow usage on local.
     
     try:
         # Wait for the review button to be clickable, then extracting the review count
